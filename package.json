@@ -1,0 +1,35 @@
+{
+  "name": "bilipeek",
+  "version": "1.0.0",
+  "description": "桌面 Bilibili 小窗播放器：无边框置顶悬浮窗，看视频/直播，老板键一键隐藏",
+  "author": "bilipeek",
+  "license": "MIT",
+  "main": "src/main.js",
+  "scripts": {
+    "start": "electron .",
+    "dist": "electron-builder --win portable --x64"
+  },
+  "devDependencies": {
+    "electron": "^33.2.1",
+    "electron-builder": "^25.1.8"
+  },
+  "build": {
+    "appId": "com.bilipeek.app",
+    "productName": "BiliPeek",
+    "directories": {
+      "output": "dist"
+    },
+    "files": [
+      "src/**/*",
+      "assets/**/*"
+    ],
+    "win": {
+      "target": "portable",
+      "icon": "assets/icon.ico",
+      "signAndEditExecutable": false
+    },
+    "portable": {
+      "artifactName": "BiliPeek-${version}-portable.exe"
+    }
+  }
+}

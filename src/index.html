@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+        content="default-src 'self'; style-src 'self' 'unsafe-inline';" />
+  <title>BiliPeek</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    html, body {
+      width: 100%; height: 100%; overflow: hidden;
+      background: #1a1a1a; color: #eee;
+      font-family: "Segoe UI", "Microsoft YaHei", sans-serif;
+      user-select: none;
+    }
+    #app { display: flex; flex-direction: column; width: 100%; height: 100%; }
+
+    #bar {
+      height: 30px; flex: 0 0 30px;
+      display: flex; align-items: center;
+      background: #222; border-bottom: 1px solid #000;
+      -webkit-app-region: drag;
+      padding: 0 4px;
+    }
+    #bar .title {
+      font-size: 12px; color: #fb7299; font-weight: 600;
+      padding: 0 6px; white-space: nowrap;
+    }
+    #bar .spacer { flex: 1; }
+    #bar button {
+      -webkit-app-region: no-drag;
+      height: 22px; min-width: 22px;
+      margin: 0 1px; padding: 0 6px;
+      border: none; border-radius: 3px;
+      background: #333; color: #ddd;
+      font-size: 12px; cursor: pointer;
+      display: inline-flex; align-items: center; justify-content: center;
+    }
+    #bar button:hover { background: #444; }
+    #bar button.active { background: #fb7299; color: #fff; }
+    #bar button.close:hover { background: #e81123; color: #fff; }
+    #bar .sep { width: 1px; height: 18px; background: #444; margin: 0 3px; }
+    #bar input#bv {
+      -webkit-app-region: no-drag;
+      height: 22px; width: 110px; margin: 0 2px; padding: 0 6px;
+      border: 1px solid #444; border-radius: 3px;
+      background: #1a1a1a; color: #ddd; font-size: 12px; outline: none;
+    }
+    #bar input#bv:focus { border-color: #fb7299; }
+    #bar input#bv::placeholder { color: #777; }
+
+    #view { flex: 1; position: relative; }
+    webview { width: 100%; height: 100%; border: none; display: inline-flex; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div id="bar">
+      <span class="title">BiliPeek</span>
+      <button id="nav-back" title="后退">‹</button>
+      <button id="nav-home" title="首页">⌂</button>
+      <button id="nav-reload" title="刷新">↻</button>
+      <span class="sep"></span>
+      <input id="bv" type="text" placeholder="BV号/链接" title="输入 BV 号或视频链接，回车跳转窗口内全屏播放" />
+      <button id="bv-go" title="跳转播放">▶</button>
+      <span class="sep"></span>
+      <button class="size" data-w="360" data-h="240" title="小 360×240">S</button>
+      <button class="size" data-w="480" data-h="300" title="中 480×300">M</button>
+      <button class="size" data-w="800" data-h="480" title="大 800×480">L</button>
+      <span class="spacer"></span>
+      <button id="top" title="置顶开关">📌</button>
+      <button id="boss" title="老板键：隐藏">🙈</button>
+      <button id="min" title="最小化">—</button>
+      <button id="close" class="close" title="退出">✕</button>
+    </div>
+    <div id="view">
+      <webview id="wv"
+               src="https://www.bilibili.com"
+               partition="persist:bili"
+               allowpopups
+               webpreferences="autoplayPolicy=no-user-gesture-required"></webview>
+    </div>
+  </div>
+  <script src="renderer.js"></script>
+</body>
+</html>
